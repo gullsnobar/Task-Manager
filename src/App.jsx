@@ -18,6 +18,7 @@ function App() {
       <main className="dashboard">
         <TaskForm />
         <TaskList />
+     
       </main>
     </div>
   );
