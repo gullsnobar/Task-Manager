@@ -7,4 +7,5 @@ export const store = configureStore({
     auth: authReducer,
     tasks: tasksReducer,
   },
+  devTools: process.env.NODE_ENV !== "production",
 });
