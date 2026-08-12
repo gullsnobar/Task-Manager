@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 
 function Signup() {
@@ -11,6 +13,15 @@ function Signup() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,6 +47,8 @@ function Signup() {
       );
 
       setMessage(response.data.message);
+
+      navigate("/login");
     } catch (error) {
       setError(
         error.response?.data?.message ||
@@ -47,41 +60,50 @@ function Signup() {
   };
 
   return (
-    <div>
-      <h1>Create Account</h1>
+    <div className="auth-page">
+      <div className="auth-card">
+        <h1>Create Account</h1>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Enter your name"
-          value={formData.name}
-          onChange={handleChange}
-        />
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <input
+            className="auth-input"
+            type="text"
+            name="name"
+            placeholder="Enter your name"
+            value={formData.name}
+            onChange={handleChange}
+          />
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter your email"
-          value={formData.email}
-          onChange={handleChange}
-        />
+          <input
+            className="auth-input"
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            value={formData.email}
+            onChange={handleChange}
+          />
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter your password"
-          value={formData.password}
-          onChange={handleChange}
-        />
+          <input
+            className="auth-input"
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            value={formData.password}
+            onChange={handleChange}
+          />
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Creating..." : "Create Account"}
-        </button>
-      </form>
+          <button className="auth-button" type="submit" disabled={loading}>
+            {loading ? "Creating..." : "Create Account"}
+          </button>
+        </form>
 
-      {message && <p>{message}</p>}
-      {error && <p>{error}</p>}
+        {message && <p className="auth-message">{message}</p>}
+        {error && <p className="auth-error">{error}</p>}
+
+        <p className="auth-footnote">
+          Already have an account? <button className="auth-link" type="button" onClick={() => navigate("/login")}>Login</button>
+        </p>
+      </div>
     </div>
   );
 }

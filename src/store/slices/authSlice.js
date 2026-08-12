@@ -21,6 +21,7 @@ const initialState = {
   isAuthenticated: false,
   loading: false,
   error: null,
+  authChecked: false,
 };
 
 const authSlice = createSlice({
@@ -45,12 +46,14 @@ const authSlice = createSlice({
 
       .addCase(getCurrentUser.fulfilled, (state, action) => {
         state.loading = false;
+        state.authChecked = true;
         state.user = action.payload;
         state.isAuthenticated = true;
       })
 
       .addCase(getCurrentUser.rejected, (state, action) => {
         state.loading = false;
+        state.authChecked = true;
         state.user = null;
         state.isAuthenticated = false;
         state.error = action.payload;

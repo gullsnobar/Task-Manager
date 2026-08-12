@@ -2,11 +2,15 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function ProtectedRoute() {
-  const { isAuthenticated, loading } = useSelector(
+  const { isAuthenticated, authChecked, loading } = useSelector(
     (state) => state.auth
   );
 
-  if (loading) {
+  if (loading && !authChecked) {
+    return <h2>Checking authentication...</h2>;
+  }
+
+  if (!authChecked) {
     return <h2>Checking authentication...</h2>;
   }
 

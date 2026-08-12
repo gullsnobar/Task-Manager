@@ -1,7 +1,26 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import api from "../../api/axios";
+
+// GET all tasks
+export const fetchTasks = createAsyncThunk(
+  "tasks/fetchTasks",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get("/tasks");
+
+      return response.data.tasks;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch tasks"
+      );
+    }
+  }
+);
 
 const initialState = {
   tasks: [],
+  loading: false,
+  error: null,
 };
 
 const tasksSlice = createSlice({
@@ -9,50 +28,25 @@ const tasksSlice = createSlice({
 
   initialState,
 
-  reducers: {
-    addTask: (state, action) => {
-      state.tasks.push({
-        id: Date.now(),
-        title: action.payload,
-        completed: false,
+  reducers: {},
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchTasks.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+
+      .addCase(fetchTasks.fulfilled, (state, action) => {
+        state.loading = false;
+        state.tasks = action.payload;
+      })
+
+      .addCase(fetchTasks.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
-    },
-
-    deleteTask: (state, action) => {
-      state.tasks = state.tasks.filter(
-        (task) => task.id !== action.payload
-      );
-    },
-
-    toggleTask: (state, action) => {
-      const task = state.tasks.find(
-        (task) => task.id === action.payload
-      );
-
-      if (task) {
-        task.completed = !task.completed;
-      }
-    },
-
-    updateTask: (state, action) => {
-      const { id, title } = action.payload;
-
-      const task = state.tasks.find(
-        (task) => task.id === id
-      );
-
-      if (task) {
-        task.title = title;
-      }
-    },
   },
 });
-
-export const {
-  addTask,
-  deleteTask,
-  toggleTask,
-  updateTask,
-} = tasksSlice.actions;
 
 export default tasksSlice.reducer;

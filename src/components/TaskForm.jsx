@@ -1,20 +1,27 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTask } from "../store/slices/tasksSlice";
+import api from "../api/axios";
+import { fetchTasks } from "../store/slices/tasksSlice";
 
 function TaskForm() {
   const [task, setTask] = useState("");
 
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!task.trim()) return;
 
-    dispatch(addTask(task.trim()));
+    try {
+      await api.post("/tasks", { title: task.trim() });
 
-    setTask("");
+      setTask("");
+
+      dispatch(fetchTasks());
+    } catch (error) {
+      console.error("Create task error:", error);
+    }
   };
 
   return (
@@ -26,9 +33,7 @@ function TaskForm() {
         placeholder="What do you want to accomplish?"
       />
 
-      <button type="submit">
-        + Add Task
-      </button>
+      <button type="submit">+ Add Task</button>
     </form>
   );
 }
