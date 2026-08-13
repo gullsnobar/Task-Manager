@@ -22,7 +22,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="dashboard-header">
+    <nav className="dashboard-header" data-cy="navbar">
       <div className="brand">
         <span className="mark">TM</span>
         <div>
@@ -32,8 +32,8 @@ function Navbar() {
       </div>
 
       <div className="user-actions">
-        <span>Welcome, {user?.name}</span>
-        <button className="logout-btn" onClick={handleLogout}>
+        <span data-cy="navbar-welcome">Welcome, {user?.name}</span>
+        <button className="logout-btn" onClick={handleLogout} data-cy="logout-button">
           Logout
         </button>
       </div>

@@ -90,15 +90,15 @@ function TaskList({ tasks }) {
 
   return (
     <>
-      <div className="task-list">
+      <div className="task-list" data-cy="task-list">
         <div className="task-list-header">
           <h2>My Tasks</h2>
 
-          <span>{list.length} Tasks</span>
+          <span data-cy="task-list-count">{list.length} Tasks</span>
         </div>
 
         {list.length === 0 ? (
-          <div className="empty-state">
+          <div className="empty-state" data-cy="empty-state">
             <h3>No tasks yet</h3>
             <p>Add your first task to get started.</p>
           </div>
@@ -109,23 +109,25 @@ function TaskList({ tasks }) {
                 task.completed ? "completed" : ""
               }`}
               key={task._id || task.id}
+              data-cy="task-card"
             >
               <div className="task-content">
                 <input
                   type="checkbox"
                   checked={!!task.completed}
                   onChange={() => handleToggle(task)}
+                  data-cy="task-checkbox"
                 />
 
-                <span>{task.title}</span>
+                <span data-cy="task-title">{task.title}</span>
               </div>
 
               <div className="task-actions">
-                <button className="edit-btn" onClick={() => openEditModal(task)}>
+                <button className="edit-btn" onClick={() => openEditModal(task)} data-cy="edit-task-button">
                   Edit
                 </button>
 
-                <button className="delete-btn" onClick={() => openDeleteModal(task)}>
+                <button className="delete-btn" onClick={() => openDeleteModal(task)} data-cy="delete-task-button">
                   Delete
                 </button>
               </div>
@@ -136,7 +138,7 @@ function TaskList({ tasks }) {
 
       {editingTask && (
         <div className="modal-overlay">
-          <div className="edit-modal">
+          <div className="edit-modal" data-cy="edit-modal">
             <h2>Edit Task</h2>
             <p className="modal-message">Update the task title and save your changes.</p>
 
@@ -145,13 +147,14 @@ function TaskList({ tasks }) {
               value={editTitle}
               onChange={(e) => setEditTitle(e.target.value)}
               placeholder="Task title"
+              data-cy="edit-task-input"
             />
 
             <div className="edit-modal-actions">
-              <button className="cancel-btn" onClick={closeEditModal}>
+              <button className="cancel-btn" onClick={closeEditModal} data-cy="cancel-edit-button">
                 Cancel
               </button>
-              <button className="save-btn" onClick={handleUpdate} disabled={!editTitle.trim()}>
+              <button className="save-btn" onClick={handleUpdate} disabled={!editTitle.trim()} data-cy="save-edit-button">
                 Save Changes
               </button>
             </div>
@@ -161,17 +164,17 @@ function TaskList({ tasks }) {
 
       {deleteTask && (
         <div className="modal-overlay">
-          <div className="confirm-modal">
+          <div className="confirm-modal" data-cy="delete-modal">
             <h2>Delete Task</h2>
             <p className="modal-message">
               Are you sure you want to delete “{deleteTask.title}”? This action cannot be undone.
             </p>
 
             <div className="edit-modal-actions">
-              <button className="cancel-btn" onClick={closeDeleteModal}>
+              <button className="cancel-btn" onClick={closeDeleteModal} data-cy="cancel-delete-button">
                 Cancel
               </button>
-              <button className="delete-confirm-btn" onClick={handleDelete}>
+              <button className="delete-confirm-btn" onClick={handleDelete} data-cy="confirm-delete-button">
                 Delete Task
               </button>
             </div>

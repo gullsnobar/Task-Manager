@@ -65,9 +65,9 @@ function Login() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <h1>Login</h1>
+        <h1 data-cy="login-heading">Login</h1>
 
-        <form className="auth-form" onSubmit={handleSubmit}>
+        <form className="auth-form" onSubmit={handleSubmit} data-cy="login-form">
           <input
             className="auth-input"
             type="email"
@@ -75,6 +75,7 @@ function Login() {
             placeholder="Enter your email"
             value={formData.email}
             onChange={handleChange}
+            data-cy="login-email-input"
           />
 
           <input
@@ -84,18 +85,19 @@ function Login() {
             placeholder="Enter your password"
             value={formData.password}
             onChange={handleChange}
+            data-cy="login-password-input"
           />
 
-          <button className="auth-button" type="submit" disabled={loading}>
+          <button className="auth-button" type="submit" disabled={loading} data-cy="login-button">
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
-        {message && <p className="auth-message">{message}</p>}
-        {error && <p className="auth-error">{error}</p>}
+        {message && <p className="auth-message" data-cy="login-message">{message}</p>}
+        {error && <p className="auth-error" data-cy="login-error">{error}</p>}
 
         <p className="auth-footnote">
-          Don't have an account? <button className="auth-link" type="button" onClick={() => navigate("/signup")}>Sign up</button>
+          Don't have an account? <button className="auth-link" type="button" onClick={() => navigate("/signup")} data-cy="goto-signup-link">Sign up</button>
         </p>
       </div>
     </div>

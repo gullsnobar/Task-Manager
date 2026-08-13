@@ -25,15 +25,16 @@ function TaskForm() {
   };
 
   return (
-    <form className="task-form" onSubmit={handleSubmit}>
+    <form className="task-form" onSubmit={handleSubmit} data-cy="task-form">
       <input
         type="text"
         value={task}
         onChange={(e) => setTask(e.target.value)}
         placeholder="What do you want to accomplish?"
+        data-cy="task-input"
       />
 
-      <button type="submit">+ Add Task</button>
+      <button type="submit" data-cy="add-task-button">+ Add Task</button>
     </form>
   );
 }

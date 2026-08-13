@@ -62,9 +62,9 @@ function Signup() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <h1>Create Account</h1>
+        <h1 data-cy="signup-heading">Create Account</h1>
 
-        <form className="auth-form" onSubmit={handleSubmit}>
+        <form className="auth-form" onSubmit={handleSubmit} data-cy="signup-form">
           <input
             className="auth-input"
             type="text"
@@ -72,6 +72,7 @@ function Signup() {
             placeholder="Enter your name"
             value={formData.name}
             onChange={handleChange}
+            data-cy="signup-name-input"
           />
 
           <input
@@ -81,6 +82,7 @@ function Signup() {
             placeholder="Enter your email"
             value={formData.email}
             onChange={handleChange}
+            data-cy="signup-email-input"
           />
 
           <input
@@ -90,18 +92,19 @@ function Signup() {
             placeholder="Enter your password"
             value={formData.password}
             onChange={handleChange}
+            data-cy="signup-password-input"
           />
 
-          <button className="auth-button" type="submit" disabled={loading}>
+          <button className="auth-button" type="submit" disabled={loading} data-cy="signup-button">
             {loading ? "Creating..." : "Create Account"}
           </button>
         </form>
 
-        {message && <p className="auth-message">{message}</p>}
-        {error && <p className="auth-error">{error}</p>}
+        {message && <p className="auth-message" data-cy="signup-message">{message}</p>}
+        {error && <p className="auth-error" data-cy="signup-error">{error}</p>}
 
         <p className="auth-footnote">
-          Already have an account? <button className="auth-link" type="button" onClick={() => navigate("/login")}>Login</button>
+          Already have an account? <button className="auth-link" type="button" onClick={() => navigate("/login")} data-cy="goto-login-link">Login</button>
         </p>
       </div>
     </div>

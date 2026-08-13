@@ -24,15 +24,15 @@ function Dashboard() {
     <div>
       <Navbar />
 
-      <main className="dashboard">
+      <main className="dashboard" data-cy="dashboard-page">
         <div className="heading-row">
           <div>
-            <h1>Welcome back, {user?.name}</h1>
+            <h1 data-cy="welcome-heading">Welcome back, {user?.name}</h1>
             <h2>Keep your task flow clean, calm, and focused.</h2>
           </div>
 
           <div className="progress-ring">
-            <p className="num">{tasks.length ?? 0}</p>
+            <p className="num" data-cy="task-count">{tasks.length ?? 0}</p>
             <p className="lbl">Tasks</p>
           </div>
         </div>
