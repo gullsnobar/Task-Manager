@@ -13,29 +13,23 @@ function TaskList({ tasks }) {
   const [editingTask, setEditingTask] = useState(null);
   const [editTitle, setEditTitle] = useState("");
   const [deleteTask, setDeleteTask] = useState(null);
-  const [feedback, setFeedback] = useState("");
-  const [actionError, setActionError] = useState("");
 
   const openEditModal = (task) => {
     setEditingTask(task);
     setEditTitle(task.title);
-    setActionError("");
   };
 
   const closeEditModal = () => {
     setEditingTask(null);
     setEditTitle("");
-    setActionError("");
   };
 
   const openDeleteModal = (task) => {
     setDeleteTask(task);
-    setActionError("");
   };
 
   const closeDeleteModal = () => {
     setDeleteTask(null);
-    setActionError("");
   };
 
   const handleUpdate = async () => {
@@ -47,14 +41,9 @@ function TaskList({ tasks }) {
       });
 
       await dispatch(fetchTasks());
-      setFeedback("Task updated successfully.");
       closeEditModal();
-      window.setTimeout(() => setFeedback(""), 2600);
     } catch (error) {
       console.error("Update task error:", error);
-      setActionError(
-        error.response?.data?.message || "Unable to update task. Please try again."
-      );
     }
   };
 
@@ -65,14 +54,9 @@ function TaskList({ tasks }) {
       await api.delete(`/tasks/${deleteTask._id}`);
 
       await dispatch(fetchTasks());
-      setFeedback("Task deleted successfully.");
       closeDeleteModal();
-      window.setTimeout(() => setFeedback(""), 2600);
     } catch (error) {
       console.error("Delete task error:", error);
-      setActionError(
-        error.response?.data?.message || "Unable to delete task. Please try again."
-      );
     }
   };
 

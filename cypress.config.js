@@ -19,7 +19,7 @@ export default defineConfig({
     // Take screenshot only on failure
     screenshotOnRunFailure: true,
 
-    setupNodeEvents(on, config) {
+    setupNodeEvents() {
       // Node-level event listeners (if needed later)
     },
   },
