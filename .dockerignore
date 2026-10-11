@@ -1,0 +1,14 @@
+node_modules
+**/node_modules
+dist
+**/dist
+.git
+.gitignore
+.env
+.env.*
+backend/.env
+backend/.env.*
+coverage
+cypress/videos
+cypress/screenshots
+npm-debug.log
