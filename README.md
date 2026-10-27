@@ -1,117 +1,97 @@
-# React + Vite
+Here is the final, professional `README.md` code. You can copy and paste this entire block directly into your `README.md` file.
 
-This project is a React application built with **Vite**, providing a fast and modern development environment with **Hot Module Replacement (HMR)** and ESLint support.
+```markdown
+# Task Manager
+
+A full-stack MERN (MongoDB, Express, React, Node.js) application designed for efficient task management. The application is fully containerized using Docker, featuring an Nginx reverse proxy for the frontend and connecting to a MongoDB Atlas cloud database.
 
 ## Tech Stack
 
-* **React** — UI library for building component-based interfaces.
-* **Vite** — Fast development server and build tool.
-* **ESLint** — Helps identify and prevent code-quality issues.
-* **JavaScript/TypeScript** — Depending on the project's configured template.
+**Frontend**
+- React
+- Vite
+- Tailwind CSS
+- ESLint
 
-## Getting Started
+**Backend**
+- Node.js
+- Express
+- MongoDB Atlas (Cloud Database)
+- JSON Web Tokens (JWT)
 
-### 1. Install Dependencies
+**DevOps & Infrastructure**
+- Docker & Docker Compose
+- Nginx
 
+## Prerequisites
+
+Ensure the following tools are installed on your machine:
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [Git](https://git-scm.com/)
+
+## Quick Start (Docker)
+
+The recommended way to run this application is via Docker Compose. This method builds the React frontend, configures Nginx, and starts the Node.js backend server simultaneously.
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/gullsnobar/Task-Manager.git
+   cd Task-Manager
+   ```
+
+2. **Configure Environment Variables:**
+   Create a `.env` file inside the `backend/` directory and add the following configuration:
+   ```env
+   PORT=5000
+   MONGO_URI=your_mongodb_atlas_connection_string
+   JWT_SECRET=your_jwt_secret_key
+   ```
+
+3. **Build and Run:**
+   ```bash
+   docker compose up --build -d
+   ```
+
+4. **Access the Application:**
+   Open your browser and navigate to `http://localhost`.
+
+## Local Development (Without Docker)
+
+To run the frontend and backend separately for development purposes:
+
+**Backend Server:**
 ```bash
+cd backend
 npm install
-```
-
-### 2. Start the Development Server
-
-```bash
 npm run dev
 ```
 
-The application will be available at the local URL provided by Vite, typically:
-
-```text
-http://localhost:5173
-```
-
-### 3. Create a Production Build
-
+**Frontend Application:**
 ```bash
-npm run build
+# Run from the project root directory
+npm install
+npm run dev
 ```
-
-### 4. Preview the Production Build
-
-```bash
-npm run preview
-```
-
-### 5. Run ESLint
-
-```bash
-npm run lint
-```
-
-## Vite React Plugins
-
-This project can use either of the official React plugins:
-
-* **[@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react)** — Uses Oxc for React support and transformation.
-* **[@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc)** — Uses SWC for fast compilation.
-
-The specific plugin used depends on the project's Vite configuration.
-
-## React Compiler
-
-The **React Compiler** is not enabled by default in this template because it can have an impact on development and build performance.
-
-If compiler support is required, follow the official [React Compiler installation documentation](https://react.dev/learn/react-compiler/installation).
-
-## ESLint Configuration
-
-For production applications, it is recommended to use **TypeScript** together with type-aware ESLint rules.
-
-For more information, see the [Vite React TypeScript template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) and [typescript-eslint](https://typescript-eslint.io/).
+The frontend development server will be available at `http://localhost:5173`.
 
 ## Project Structure
 
-A typical project structure looks like:
-
 ```text
-src/
-├── assets/
-├── components/
-├── App.jsx
-├── main.jsx
-└── index.css
-
-public/
-package.json
-vite.config.js
-eslint.config.js
-README.md
+Task-Manager/
+├── backend/          # Express server, API routes, and controllers
+├── src/              # React frontend source code
+├── Dockerfile        # Multi-stage Docker build configuration
+├── compose.yaml      # Docker Compose orchestration file
+├── nginx.conf        # Nginx configuration for serving frontend and proxying API
+└── README.md         # Project documentation
 ```
 
-The exact structure may vary depending on the features implemented in the project.
+## Available Commands
 
-## Development Guidelines
-
-* Keep components small and reusable.
-* Use meaningful names for components, variables, and functions.
-* Keep business logic separate from presentation logic where appropriate.
-* Follow ESLint rules and resolve linting issues before committing code.
-* Avoid unnecessary state and keep state as close as possible to the components that use it.
-* Use appropriate React patterns such as props, Context API, and reducers when required by the application.
-
-## Useful Commands
-
-| Command           | Purpose                      |
-| ----------------- | ---------------------------- |
-| `npm install`     | Install project dependencies |
-| `npm run dev`     | Start development server     |
-| `npm run build`   | Create production build      |
-| `npm run preview` | Preview production build     |
-| `npm run lint`    | Run ESLint                   |
-
-## References
-
-* [React Documentation](https://react.dev/)
-* [Vite Documentation](https://vite.dev/)
-* [React Compiler Documentation](https://react.dev/learn/react-compiler/installation)
-* [TypeScript ESLint](https://typescript-eslint.io/)
-* [Vite React Templates](https://github.com/vitejs/vite/tree/main/packages/create-vite)
+| Command | Description |
+| :--- | :--- |
+| `docker compose up --build -d` | Build and start the application in detached mode |
+| `docker compose down` | Stop and remove the application containers |
+| `docker logs task-manager-app-1` | View the live application logs |
+| `npm run build` | Generate a production build of the frontend |
+```
