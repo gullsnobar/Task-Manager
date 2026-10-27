@@ -1,28 +1,37 @@
-FROM node:20-alpine AS builder
-
+# --- Stage 1: Build Frontend ---
+FROM node:20-alpine AS frontend-builder
 WORKDIR /app
-
-COPY package.json package-lock.json ./
+COPY package*.json ./
 RUN npm ci
-
 COPY . .
 RUN npm run build
 
-FROM node:20-alpine AS runtime
+# --- Stage 2: Final Runtime ---
+FROM node:20-alpine
+WORKDIR /app
 
-WORKDIR /app/backend
+# Install nginx
+RUN apk add --no-cache nginx
 
-COPY backend/package.json backend/package-lock.json ./
-RUN npm ci --omit=dev
+# Copy backend code and install dependencies
+COPY backend/package*.json ./backend/
+RUN cd backend && npm ci --omit=dev
+COPY backend/ ./backend/
 
-COPY backend/ ./
-COPY --from=builder /app/dist ./public
+# Copy frontend build output to nginx directory
+COPY --from=frontend-builder /app/dist /usr/share/nginx/html
 
-ENV NODE_ENV=production
+# Configure nginx: serve frontend, proxy /api to backend
+RUN echo 'server { \
+    listen 80; \
+    location / { \
+        root /usr/share/nginx/html; \
+        try_files $uri $uri/ /index.html; \
+    } \
+    location /api/ { \
+        proxy_pass http://localhost:5000; \
+    } \
+}' > /etc/nginx/http.d/default.conf
 
-EXPOSE 5000
-
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD node -e "fetch('http://127.0.0.1:' + (process.env.PORT || 5000) + '/api/health').then((response) => { if (!response.ok) process.exit(1); }).catch(() => process.exit(1));"
-
-CMD ["node", "server.js"]
+# Start nginx and backend
+CMD sh -c "nginx && cd /app/backend && node server.js"
